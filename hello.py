@@ -7,6 +7,7 @@ from wtforms.validators import Required      #验证函数
 # end_wtf}}}
 # {{{ sql alchemy
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.migrate import Migrate, MigrateCommand
 # end sql}}}
 
 import os
@@ -23,11 +24,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 manager = Manager(app)
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 def make_shell_context():
     return dict(app=app, db=db, User=User, Role=Role)
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
+manager.add_command("db", MigrateCommand)
 
 class NameForm(Form):
     name = StringField('用户名', validators=[Required()])         # type="text"的<input>

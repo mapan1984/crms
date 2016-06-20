@@ -1,0 +1,8 @@
+{% extends "default.html" %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}</h1>
+</div>
+<p>一些管理的界面</p>
+{% endblock %}

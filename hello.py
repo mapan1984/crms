@@ -1,16 +1,38 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for
 from flask.ext.script import Manager
-from flask.ext.bootstrap import Bootstrap
+
+# {{{ wtf
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField, PasswordField #字段对象
+from wtforms.validators import Required      #验证函数
+# end_wtf}}}
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'hard to guess string'
 
 manager = Manager(app)
-bootstrap = Bootstrap(app)
 
 
-@app.route('/')
+class NameForm(Form):
+    name = StringField('用户名', validators=[Required()])         # type="text"的<input>
+    password = PasswordField('输入密码', validators=[Required()]) # type="password的<input>"
+    submit = SubmitField('登陆')                                  # type="submit"的<input>
+
+
+@app.route('/', methods=['get', 'post'])
 def index():
-    return render_template('index.html')
+    form = NameForm()
+    if form.validate_on_submit():
+        session['name'] = form.name.data
+        session['password'] = form.password.data
+        return redirect(url_for('manage'))
+    return render_template('index.html', form=form, name=session.get('name'))
+
+
+@app.route('/manage', methods=['get', 'post'])
+def manage():
+    return render_template('manage.html', name=session.get('name'))
 
 
 @app.route('/user/<name>')

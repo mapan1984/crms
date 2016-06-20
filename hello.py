@@ -1,3 +1,6 @@
+import os
+from threading import Thread
+
 from flask import Flask, render_template, session, redirect, url_for
 from flask.ext.script import Manager, Shell
 # {{{ wtf
@@ -9,8 +12,7 @@ from wtforms.validators import Required      #验证函数
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.migrate import Migrate, MigrateCommand
 # end sql}}}
-
-import os
+from flask.ext.mail import Mail, Message
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -21,16 +23,42 @@ app.config['SQLALCHEMY_DATABASE_URI'] =\
 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['MAIL_SERVER'] = 'smtp.163.com'
+app.config['MAIL_PORT'] = '465'
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_SENDER'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_SUBJECT_PREFIX'] = '[COM_MAG]'
+app.config['BEN_ADMIN'] =  os.environ.get('ben_admin')
+
+app.config['MAIL_SUBJECT_PREFIX'] = '[COM ADMIN]'
+app.config['MAIL_SENDER'] = 'COM Admin <mapansky1984@163.com>'
 
 manager = Manager(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app)
 
 def make_shell_context():
     return dict(app=app, db=db, User=User, Role=Role)
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command("db", MigrateCommand)
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+def send_email(to, subject, template, **kwargs):
+    msg = Message(app.config['MAIL_SUBJECT_PREFIX'] + subject,
+                  sender=app.config['MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
 
 class NameForm(Form):
     name = StringField('用户名', validators=[Required()])         # type="text"的<input>
@@ -71,12 +99,17 @@ def index():
             user = User(username=form.name.data, password=form.password.data, role=user_role)
             db.session.add(user)
             session['known'] = False
+            if app.config['BEN_ADMIN']:
+                send_email(app.config['BEN_ADMIN'], 'New User',
+                           'mail/new_user', user=user)
         else: #用户不是第一次登陆
             session['known'] = True
         session['name'] = form.name.data
+        form.name.date = ''
         session['password'] = form.password.data
         return redirect(url_for('manage'))
     return render_template('index.html', form=form)
+
 
 @app.route('/manage', methods=['get', 'post'])
 def manage():

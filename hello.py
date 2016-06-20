@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, redirect, url_for
-from flask.ext.script import Manager
+from flask.ext.script import Manager, Shell
 # {{{ wtf
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField, PasswordField #字段对象
@@ -23,6 +23,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 manager = Manager(app)
 db = SQLAlchemy(app)
+
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
+
+manager.add_command("shell", Shell(make_context=make_shell_context))
 
 class NameForm(Form):
     name = StringField('用户名', validators=[Required()])         # type="text"的<input>

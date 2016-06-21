@@ -21,7 +21,7 @@ def index():
         if user is not None and user.verify_password(form.password.data):
             if user.is_admin:
                 login_user(user, form.remember_me.data)
-                return redirect(request.args.get('next') or url_for('main.manage'))
+                return redirect(request.args.get('next') or url_for('main.manage_all_computers'))
             elif not user.is_admin:
                 login_user(user, form.remember_me.data)
                 return redirect(request.args.get('next') or url_for('main.auth'))
@@ -40,9 +40,9 @@ def register():
         return redirect(url_for('main.index'))
     return render_template('/register.html', form=form)
 
-@main.route('/manage', methods=['get', 'post'])
-def manage():
-    return render_template('manage/manage.html')
+@main.route('/manage/all_computers', methods=['get', 'post'])
+def manage_all_computers():
+    return render_template('manage/all_computers.html', computer_list=Computer.query.all())
 
 @main.route('/auth', methods=['get', 'post'])
 def auth():

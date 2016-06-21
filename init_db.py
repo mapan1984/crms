@@ -19,12 +19,12 @@ user_other.password = 'other'
 c1 = Computer(name='c1', user=admin_mapan)
 c2 = Computer(name='c2', user=user_other)
 c3 = Computer(name='c3', user=admin_mapan)
-c4 = Computer(name='c4', user=admin_mapan)
-c5 = Computer(name='c5', user=user_other)
-c6 = Computer(name='c6', user=user_other)
+c4 = Computer(name='c4')
+c5 = Computer(name='c5')
+c6 = Computer(name='c6')
 
 # 通过db.session管理数据库的改动
-db.session.add_all([c1, c2, admin_mapan, user_other])
+db.session.add_all([c1, c2, c3, c4, c5, c6, admin_mapan, user_other])
 db.session.commit()
 
 print(c1.id)

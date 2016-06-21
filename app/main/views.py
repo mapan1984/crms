@@ -8,6 +8,8 @@ from .forms import NameForm
 
 '''
 由蓝本定义路由: main
+定义路由是app为创建，所以使用current_app
+url_for使用命名空间
 '''
 @main.route('/', methods=['GET', 'POST'])
 def index():

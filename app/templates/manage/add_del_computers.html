@@ -1,11 +1,29 @@
 {% extends "_layouts/manage_default.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block manage_content %}
 <div class="page-header">
-  <!-- current_user 由Flask-Login定义，在视图函数和模板中自动可用-->
-  <h1>Hello, 管理员{% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+  <ul class="nav nav-pills" role="tablist">
+    <li role="presentation" class="active">
+    <a href="#add" aria-controls="add" role="tab" data-toggle="tab">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加
+    </a>
+    </li>
+    <li role="presentation">
+    <a href="#deletes" aria-controls="deletes" role="tab" data-toggle="tab">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除
+    </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="add">
+      {{ wtf.quick_form(add_form) }}
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="deletes">
+      {{ wtf.quick_form(del_form) }}
+    </div>
+  </div><!-- tab-content -->
 </div>
-<h2 class="sub-header">添加/删除电脑</h2>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>

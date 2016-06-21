@@ -1,14 +1,16 @@
 {% extends "_layouts/default.html" %}
 
 {% block content %}
+
 <div class="container">
   <form class="form-signin" method="POST">
     <h2 class="form-signin-heading">请登录</h2>
     {{ form.hidden_tag() }}
-    {{ form.name.label(class="sr-only") }} 
-    {{ form.name(class='form-control') }}
+    {{ form.email.label }} 
+    {{ form.email(class='form-control') }}
     {{ form.password.label }} 
     {{ form.password(class='form-control') }}
     {{ form.submit() }}
+  </form>
 </div> <!-- /container -->
 {% endblock %}

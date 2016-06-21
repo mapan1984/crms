@@ -1,8 +1,11 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, PasswordField #字段对象
-from wtforms.validators import Required      #验证函数
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import Required, Length, Email
 
-class NameForm(Form):
-    name = StringField('用户名', validators=[Required()])         # type="text"的<input>
-    password = PasswordField('输入密码', validators=[Required()]) # type="password的<input>"
-    submit = SubmitField('登陆')                                  # type="submit"的<input>
+
+class LoginForm(Form):
+    email = StringField('邮件地址', validators=[Required(), Length(1, 64),
+                                             Email()])
+    password = PasswordField('密码', validators=[Required()])
+    remember_me = BooleanField('Keep me logged in')
+    submit = SubmitField('登陆')

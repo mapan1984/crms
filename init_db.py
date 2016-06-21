@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 # encoding: utf-8
+import os
+from app import create_app, db
+from app.models import User, Role
+from flask.ext.script import Manager, Shell
+from flask.ext.migrate import Migrate, MigrateCommand
 
-from hello import db, Role, User
+app = create_app('default')
 
 db.drop_all()
 db.create_all()
@@ -9,11 +14,13 @@ db.create_all()
 admin_role = Role(name='Admin')
 user_role = Role(name='User')
 
-user_mapan = User(username='mapan', password='mapan', role=admin_role)
-user_other = User(username='other', password='other', role=user_role)
+admin_mapan = User(email='mapansky1984@163.com', username='mapan', role=admin_role)
+admin_mapan.password = 'mapan'
+user_other = User(email='2642896890@qq.com', username='other', role=user_role)
+user_other.password = 'other'
 
 # 通过db.session管理数据库的改动
-db.session.add_all([admin_role, user_role, user_mapan, user_other])
+db.session.add_all([admin_role, user_role, admin_mapan, user_other])
 db.session.commit()
 
 print(admin_role.id)

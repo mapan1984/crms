@@ -20,7 +20,6 @@ def index():
             login_user(user, form.remember_me.data)
             return redirect(request.args.get('next') or url_for('main.manage'))
         flash('无效密码')
-        return redirect(request.args.get('next') or url_for('main.manage'))
     return render_template('index.html', form=form)
 
 @main.route('/manage', methods=['get', 'post'])

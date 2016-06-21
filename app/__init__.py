@@ -9,7 +9,7 @@ db = SQLAlchemy()
 # 初始化 flask-login
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'auth.login' # 注册蓝本的登陆页面路由
+login_manager.login_view = 'index.login'  # 注册蓝本的登陆页面路由
 
 def create_app(config_name): # 程序的配置名
     app = Flask(__name__)

@@ -6,8 +6,8 @@ from ..models import User
 
 # prefix 为注册路由自动加前缀/manage
 @manage.route('/logout')
-#@login_required
+@login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def logout():
-#    logout_user()
-    flash('已经退出')
+    logout_user()
+    flash('你现在已经退出')
     return redirect(url_for('main.index'))

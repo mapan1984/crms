@@ -21,6 +21,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id')) # 外键,值为表roles的id,类型为Integer
 
     @property         # 把password方法变为属性,但读取会引发错误(xxxx = password)

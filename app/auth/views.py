@@ -6,8 +6,8 @@ from ..models import User
 
 # prefix 为注册路由自动加前缀/auth
 @auth.route('/logout')
-#@login_required
+@login_required
 def logout():
-    #logout_user()
-    flash('已经退出')
+    logout_user() # 删除并重折用户回话
+    flash('你现在已经退出')
     return redirect(url_for('main.index'))

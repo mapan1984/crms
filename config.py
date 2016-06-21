@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = 'hard to guess string'
-    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True   # 每次请求结束后，会自动提交数据库的变动
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 # Mail_Config {{
     MAIL_SERVER = 'smtp.163.com'

@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, session, url_for, flash
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user
 from .. import db
-from ..models import User, Role
+from ..models import User, Computer
 from ..email import send_email
 from . import main
 from .forms import LoginForm, RegistrationForm

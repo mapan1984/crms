@@ -2,7 +2,6 @@
 
 {% block head %}
   {{ super() }}
-  <title>管理页面</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
 {% endblock %}
 
@@ -35,10 +34,10 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">全局视图<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">已使用机器</a></li>
-        <li><a href="#">空闲机器</a></li>
-        <li><a href="#">MOre</a></li>
+        <li ><a href="{{ url_for('main.manage_all_computers') }}">全局视图<span class="sr-only">(current)</span></a></li>
+        <li><a href="{{ url_for('manage.busy_computers') }}">已使用机器</a></li>
+        <li><a href="{{ url_for('manage.free_computers') }}">空闲机器</a></li>
+        <li><a href="{{ url_for('manage.add_del_computers') }}">添加/删除机器</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="">在线用户</a></li>
@@ -54,7 +53,7 @@
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      {% include '_includes/mng.html' %}
+      {% block manage_content %}{% endblock %}
     </div>
   </div>
 </div>

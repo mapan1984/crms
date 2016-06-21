@@ -2,18 +2,16 @@ from werkzeug.security import generate_password_hash, check_password_hash # 提�
 from flask.ext.login import UserMixin # 提供验证用户方法的默认实现
 from . import db, login_manager
 
-class Role(db.Model):
-    __tablename__ = 'roles'
+class Computer(db.Model):
+    __tablename__ = 'computers'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    # users属性返回与这个角色相关联的用户组成的列表
-    # 第一个参数User表示关联的模型
-    # role向User模型中添加一个role属性
-    # 这一属性可代替role_id访问Role模型，获取模型对象
-    users = db.relationship('User', backref='role', lazy='dynamic') 
+    name = db.Column(db.String(64), unique=True, index=True)
+    # 外键,值为表computers的id,类型为Integer
+    # user_id可以为空，表示现在没有用户
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) 
 
     def __repr__(self):
-        return '<Role %r>' % self.name
+        return '<Computer %r>' % self.name
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -22,7 +20,11 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id')) # 外键,值为表roles的id,类型为Integer
+    # computers属性返回与这个用户相关联的计算机组成的列表
+    # 第一个参数Computer表示关联的模型
+    # 第二个user向Computer模型中添加一个user属性
+    # 这一属性可代替user_id访问User模型，获取模型对象
+    computers = db.relationship('Computer', backref='user', lazy='dynamic') 
 
     @property         # 把password方法变为属性,但读取会引发错误(xxxx = password)
     def password(self):

@@ -1,10 +1,12 @@
 from flask import render_template, redirect, request, session, url_for, flash
-from flask.ext.login import login_user, logout_user, login_required
+from flask.ext.login import login_user, logout_user, login_required, \
+    current_user
 from .. import db
 from ..models import User, Role
 from ..email import send_email
 from . import main
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
+
 
 '''
 由蓝本定义路由: main
@@ -21,6 +23,18 @@ def index():
             return redirect(request.args.get('next') or url_for('main.manage'))
         flash('无效密码')
     return render_template('index.html', form=form)
+
+@main.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data,
+                    password=form.password.data)
+        db.session.add(user)
+        flash('你现在可以登录')
+        return redirect(url_for('main.index'))
+    return render_template('/register.html', form=form)
 
 @main.route('/manage', methods=['get', 'post'])
 def manage():

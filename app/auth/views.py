@@ -9,5 +9,5 @@ from ..models import User
 @login_required
 def logout():
     logout_user() # 删除并重折用户回话
-    flash('已经退出')
+    flash('你现在已经退出')
     return redirect(url_for('main.index'))

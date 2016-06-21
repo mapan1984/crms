@@ -19,8 +19,12 @@ def index():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('main.manage'))
+            if user.is_admin:
+                login_user(user, form.remember_me.data)
+                return redirect(request.args.get('next') or url_for('main.manage'))
+            elif not user.is_admin:
+                login_user(user, form.remember_me.data)
+                return redirect(request.args.get('next') or url_for('main.auth'))
         flash('无效密码')
     return render_template('index.html', form=form)
 
@@ -38,7 +42,11 @@ def register():
 
 @main.route('/manage', methods=['get', 'post'])
 def manage():
-    return render_template('manage/manage.html', name=session.get('name', 'noname'))
+    return render_template('manage/manage.html')
+
+@main.route('/auth', methods=['get', 'post'])
+def auth():
+    return render_template('auth/auth.html')
 
 @main.route('/user/<name>')
 def user(name):

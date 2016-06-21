@@ -9,5 +9,5 @@ from ..models import User
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def logout():
     logout_user()
-    flash('已经退出')
+    flash('你现在已经退出')
     return redirect(url_for('main.index'))

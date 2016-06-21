@@ -1,3 +1,6 @@
+{% extends "bootstrap/base.html" %}
+
+{% block doc %}
 <!doctype html>
 <html lang="zh-cn">
 <head>
@@ -7,6 +10,14 @@
 </head>
 <body style="position: relative; padding-top: 70px;">
   {% include '_includes/nav.html' %}
+
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+  {% endfor %}
+
   {% block content %}{% endblock %}
 
   {% block js %}
@@ -14,3 +25,4 @@
   {% endblock %}
 </body>
 </html>
+{% endblock %}

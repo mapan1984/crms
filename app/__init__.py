@@ -1,9 +1,11 @@
 from flask import Flask
+from flask.ext.bootstrap import Bootstrap
 from flask.ext.mail import Mail
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from config import config
 
+bootstrap = Bootstrap()
 mail = Mail()
 db = SQLAlchemy()
 # 初始化 flask-login
@@ -16,6 +18,7 @@ def create_app(config_name): # 程序的配置名
     app.config.from_object(config[config_name]) # 导入配置
     config[config_name].init_app(app)  # 初始化扩展
 
+    bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)

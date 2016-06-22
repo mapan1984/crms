@@ -1,6 +1,7 @@
 {% extends "_layouts/default.html" %}
 
 {% block content %}
+{{ super() }}
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -10,21 +11,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">机房管理系统</a>
+      <a class="navbar-brand" href="{{ url_for('user.information') }}">机房管理系统</a>
     </div>
     <div class="navbar-collapse collapse" id="navbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url_for('manage.logout') }}">Sign Out</a></li>
+        <li><a href="{{ url_for('user.logout') }}">退出登录</a></li>
       </ul>
     </div>
   </div>
 </nav>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-      <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-    </div>
-  </div>
+  {% block user_content %}{% endblock %}
 </div>
 {% endblock %}

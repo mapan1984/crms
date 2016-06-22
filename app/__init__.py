@@ -26,8 +26,8 @@ def create_app(config_name): # 程序的配置名
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)  # 注册蓝本
 
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint, url_prefix='/auth')  # prefix会使注册为/login
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint, url_prefix='/user')  # prefix会使注册为/login
                                                                 # 的路由变为/auth/login
     from .manage import manage as manage_blueprint
     app.register_blueprint(manage_blueprint, url_prefix='/manage')

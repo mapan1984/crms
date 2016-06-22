@@ -5,38 +5,45 @@ from . import manage
 from ..models import User, Computer
 from .forms import AddForm, DelForm
 
-import datetime
+import functools
+
+def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信息
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        computer_list = Computer.query.all()
+        for computer in computer_list:
+            computer.refresh()
+            db.session.add(computer)
+        return func(*args, **kw)
+    return wrapper
 
 
 # prefix 为注册路由自动加前缀/manage
 @manage.route('/all_computers')
 @login_required
+@all_computers_refresh
 def all_computers():
-    now_time = datetime.datetime.now()
     return render_template('manage/all_computers.html', 
-                           computer_list=Computer.query.all(),
-                           now_time=now_time)
+                           computer_list=Computer.query.all())
 
 @manage.route('/busy_computers')
 @login_required
+@all_computers_refresh
 def busy_computers():
-    now_time = datetime.datetime.now()
     return render_template('manage/busy_computers.html', 
-                           computer_list=Computer.query.all(),
-                           now_time=now_time)
+                           computer_list=Computer.query.all())
 
 @manage.route('/free_computers')
 @login_required
+@all_computers_refresh
 def free_computers():
-    now_time = datetime.datetime.now()
     return render_template('manage/free_computers.html', 
-                           computer_list=Computer.query.all(),
-                           now_time=now_time)
+                           computer_list=Computer.query.all())
 
 @manage.route('/add_computers', methods=['GET', 'POST'])
 @login_required
+@all_computers_refresh
 def add_computers():
-    now_time = datetime.datetime.now()
     add_form = AddForm()
     if add_form.validate_on_submit():
         computer = Computer.query.filter_by(name=add_form.name.data).first()
@@ -49,13 +56,12 @@ def add_computers():
         return redirect(url_for('manage.add_computers'))
     return render_template('manage/add_computers.html', 
                            computer_list=Computer.query.all(),
-                           add_form=add_form,
-                           now_time=now_time)
+                           add_form=add_form)
 
 @manage.route('/del_computers', methods=['GET', 'POST'])
 @login_required
+@all_computers_refresh
 def del_computers():
-    now_time = datetime.datetime.now()
     del_form = DelForm()
     if del_form.validate_on_submit():
         computer = Computer.query.filter_by(name=del_form.name.data).first()
@@ -67,16 +73,14 @@ def del_computers():
         return redirect(url_for('manage.del_computers'))
     return render_template('manage/del_computers.html', 
                            computer_list=Computer.query.all(),
-                           del_form=del_form,
-                           now_time=now_time)
+                           del_form=del_form)
 
 @manage.route('/all_users')
 @login_required
+@all_computers_refresh
 def all_users():
-    now_time = datetime.datetime.now()
     return render_template('manage/all_users.html', 
-                           user_list=User.query.all(),
-                           now_time=now_time)
+                           user_list=User.query.all())
 
 @manage.route('/logout')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问

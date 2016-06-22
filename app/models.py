@@ -9,11 +9,16 @@ class Computer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
     start_time = db.Column(db.DateTime)
-    end_time = db.Column(db.DateTime)
     spend_time = db.Column(db.Interval)
     # 外键,值为表computers的id,类型为Integer
     # user_id可以为空，表示现在没有用户
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) 
+
+    def refresh(self):
+        if self.start_time is not None:
+            self.spend_time = datetime.datetime.now() - self.start_time
+        else:
+            pass
 
     def __repr__(self):
         return '<Computer %r>' % self.name

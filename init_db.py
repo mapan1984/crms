@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 import os
-from app import create_app, db
+import datetime
+from app import db
 from app.models import User, Computer
-from flask.ext.script import Manager, Shell
-from flask.ext.migrate import Migrate, MigrateCommand
 
-app = create_app('default')
 
 db.drop_all()
 db.create_all()
@@ -29,54 +27,15 @@ db.session.commit()
 
 print(c1.id)
 
-'''
-===================================
-Python对象 ----> data.sqlite
---------------------------------------
-修改行
->>> admin_role.name = 'Administrator'
->>> db.session.add(admin_role)
->>> ad.session.commit()
 
-删除行
->>> db.session.delete(admin_role)
->>> db.session.commit()
+f=True
 
-查询行
->>> Computer.query.all()
-[<Computer u'Admin'>, <Computer u'User'>]
-
->>> User.query.filter_by(role=user_role).all()
-[<User u'other'>]
-
-查看原生SQL查询语句
->>> str(User.query.filter_by(role=user_role))
-'SELECT users.id AS users_id, users.username AS users_username,
-users.role_id AS users_role_id FROM users WHERE :param_1 = users.role_id'
-
-
-============================================================
-data.sqlite ---------> Python对象
-------------------------------------------------
-加载名为User的用户角色(在shell中通过数据库查询)
->>> user_role = Computer.query.filter_by(name='User').first()
->>> user_role.all()
-[<Computer 'User'>]
-
-
-========================================================
-Computer对象的users属性返回这个对象的
-users = db.relationship('User', backref='role') # users属性返回与这个角色相关联的用户组成的列表
---------------------------------------------------------------------------------------
->>> users = user_role.users
->>> users
-[<User u'other'>]
->>> users[0].role
-<Computer u'User'>
-
-添加lazy='dynamic'后，禁止自动查询
->>> user_role.users.order_by(User.username).all()
-[<User u'david'>, <User u'susan'>]
->>> user_role.users.count()
-2
-'''
+def test_time():
+    global f
+    c=Computer.query.filter_by(name='c1').first()
+    if f:
+        c.start_time = datetime.datetime.now()
+        i=False
+    else:
+        print(c.current_time)
+        print(c.spend_time)

@@ -24,8 +24,8 @@
         {% if computer.user != None %}
         <td>{{ computer.user.username }}</td>
         <td>{{ computer.start_time }}</td>
-        <td>{{ now_time-computer.start_time }}</td>
-        <td>{{ now_time-computer.start_time }}</td>
+        <td>{{ computer.spend_time }}</td>
+        <td>{{ computer.spend_time }}</td>
         {% else %}
         <td>无</td>
         <td>无</td>

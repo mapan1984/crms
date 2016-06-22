@@ -27,9 +27,9 @@ def add_computers():
         if computer == None:
             c = Computer(name=add_form.name.data)
             db.session.add(c)
-            flash('电脑已添加')
+            flash('添加成功，电脑已添加')
         else:
-            flash('电脑已存在')
+            flash('添加失败，电脑已存在')
         return redirect(url_for('manage.add_computers'))
     return render_template('manage/add_computers.html', 
                            computer_list=Computer.query.all(),
@@ -43,9 +43,9 @@ def del_computers():
         computer = Computer.query.filter_by(name=del_form.name.data).first()
         if computer != None:
             db.session.delete(computer)
-            flash('电脑已删除')
+            flash('删除成功，电脑已删除')
         else:
-            flash('电脑不存在')
+            flash('删除失败，电脑不存在')
         return redirect(url_for('manage.del_computers'))
     return render_template('manage/del_computers.html', 
                            computer_list=Computer.query.all(),

@@ -4,7 +4,7 @@ from . import auth
 from ..models import User
 
 
-# prefix 为注册路由自动加前缀/auth
+# prefix 为注册路由自动加前缀/user
 @auth.route('/logout')
 @login_required
 def logout():

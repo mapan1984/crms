@@ -17,6 +17,8 @@ def information():
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def logout():
     current_user = User.query.filter_by(id=session.get('current_user_id')).first()
+    current_user_computer = current_user.computers.first()
+    current_user_computer.user = None   # 退出登录时取消链接电脑
     message=''.join(['用户', current_user.username, '现在已经退出'])
     logout_user() # 删除并重折用户回话
     flash(message)

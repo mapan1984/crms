@@ -16,9 +16,9 @@ admin_mapan.password = 'mapan'
 user_other = User(email='2642896890@qq.com', username='other', is_admin=False)
 user_other.password = 'other'
 
-c1 = Computer(name='c1', user=admin_mapan)
-c2 = Computer(name='c2', user=user_other)
-c3 = Computer(name='c3', user=admin_mapan)
+c1 = Computer(name='c1')
+c2 = Computer(name='c2')
+c3 = Computer(name='c3')
 c4 = Computer(name='c4')
 c5 = Computer(name='c5')
 c6 = Computer(name='c6')

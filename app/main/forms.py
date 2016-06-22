@@ -10,7 +10,7 @@ class LoginForm(Form):
                                              Email()])
     password = PasswordField('密码', validators=[Required()])
     remember_me = BooleanField('Keep me logged in')
-    submit = SubmitField('登陆')
+    submit = SubmitField('登录')
 
 
 class RegistrationForm(Form):

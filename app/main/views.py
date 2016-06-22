@@ -7,6 +7,7 @@ from ..email import send_email
 from . import main
 from .forms import LoginForm, RegistrationForm
 
+import datetime
 
 '''
 由蓝本定义路由: main
@@ -24,10 +25,15 @@ def index():
                 return redirect(request.args.get('next') or url_for('manage.all_computers'))
             elif not user.is_admin:
                 login_user(user, form.remember_me.data)
+                free_computer = Computer.query.filter_by(user=None).first()
+                free_computer.user = user
+                free_computer.start_time = datetime.datetime.now()
+                db.session.add(free_computer)
                 session['current_user_id']=user.id
                 return redirect(request.args.get('next') or url_for('user.information'))
         flash('无效密码')
     return render_template('index.html', form=form)
+
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
@@ -37,6 +43,6 @@ def register():
                     username=form.username.data,
                     password=form.password.data)
         db.session.add(user)
-        flash('你现在可以登录')
+        flash('你现在可以登录了')
         return redirect(url_for('main.index'))
     return render_template('/register.html', form=form)

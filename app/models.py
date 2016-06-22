@@ -2,10 +2,15 @@ from werkzeug.security import generate_password_hash, check_password_hash # 提�
 from flask.ext.login import UserMixin # 提供验证用户方法的默认实现
 from . import db, login_manager
 
+import datetime
+
 class Computer(db.Model):
     __tablename__ = 'computers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
+    spend_time = db.Column(db.Interval)
     # 外键,值为表computers的id,类型为Integer
     # user_id可以为空，表示现在没有用户
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) 

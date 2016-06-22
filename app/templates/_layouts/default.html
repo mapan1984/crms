@@ -11,14 +11,16 @@
 <body style="position: relative; padding-top: 70px;">
   {% include '_includes/nav.html' %}
 
-  {% for message in get_flashed_messages() %}
-  <div class="alert alert-warning">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ message }}
-  </div>
-  {% endfor %}
+  {% block content %}
 
-  {% block content %}{% endblock %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+    {% endfor %}
+
+  {% endblock %}
 
   {% block js %}
     {% include '_includes/js.html' %}

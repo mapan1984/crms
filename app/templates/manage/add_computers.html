@@ -1,0 +1,32 @@
+{% extends "_layouts/manage_default.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block manage_content %}
+<div class="page-header">
+     {{ wtf.quick_form(add_form) }}
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>计算机ID</th>
+        <th>计算机编号</th>
+        <th>计算机使用者</th>
+        <th>上机时间</th>
+        <th>上级费用</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for computer in computer_list %}
+      <tr>
+        <td>{{ computer.id }}</td>
+        <td>{{ computer.name }}</td>
+        <td>{% if computer.user != None %}{{ computer.user.username }}{% else %}无{% endif %}</td>
+        <td>dolor</td>
+        <td>sit</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

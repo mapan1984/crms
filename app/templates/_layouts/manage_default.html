@@ -37,7 +37,8 @@
         <li ><a href="{{ url_for('main.manage_all_computers') }}">全局视图<span class="sr-only">(current)</span></a></li>
         <li><a href="{{ url_for('manage.busy_computers') }}">已使用机器</a></li>
         <li><a href="{{ url_for('manage.free_computers') }}">空闲机器</a></li>
-        <li><a href="{{ url_for('manage.add_del_computers') }}">添加/删除机器</a></li>
+        <li><a href="{{ url_for('manage.add_computers') }}">添加机器</a></li>
+        <li><a href="{{ url_for('manage.del_computers') }}">删除机器</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="">在线用户</a></li>
@@ -53,6 +54,12 @@
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+      </div>
+      {% endfor %}
       {% block manage_content %}{% endblock %}
     </div>
   </div>

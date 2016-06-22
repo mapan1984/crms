@@ -40,7 +40,7 @@
       <tr>
         <td>{{ computer.id }}</td>
         <td>{{ computer.name }}</td>
-        <td>{% if user != None %}{{ computer.user.username }}{% else %}无{% endif %}</td>
+        <td>{% if computer.user != None %}{{ computer.user.username }}{% else %}无{% endif %}</td>
         <td>dolor</td>
         <td>sit</td>
       </tr>

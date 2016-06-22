@@ -24,7 +24,7 @@ def index():
                 return redirect(request.args.get('next') or url_for('main.manage_all_computers'))
             elif not user.is_admin:
                 login_user(user, form.remember_me.data)
-                return redirect(request.args.get('next') or url_for('main.auth'))
+                return redirect(request.args.get('next') or url_for('main.user_user'))
         flash('无效密码')
     return render_template('index.html', form=form)
 
@@ -44,10 +44,6 @@ def register():
 def manage_all_computers():
     return render_template('manage/all_computers.html', computer_list=Computer.query.all())
 
-@main.route('/auth', methods=['get', 'post'])
-def auth():
-    return render_template('auth/auth.html')
-
-@main.route('/user/<name>')
-def user(name):
-    return render_template('user.html', name=name)
+@main.route('/user/user', methods=['get', 'post'])
+def user_user():
+    return render_template('user/user.html')

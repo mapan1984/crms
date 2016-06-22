@@ -41,7 +41,7 @@ class User(UserMixin, db.Model):
         return '<User %r>' % self.username
 
 
-# 加载用户的回掉函数,使用user_id加载用户,返回特定id的用户对象
+# 加载用户的回调函数,使用user_id加载用户,返回特定id的用户对象
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

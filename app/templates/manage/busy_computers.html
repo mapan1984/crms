@@ -24,8 +24,9 @@
         <td>{{ computer.id }}</td>
         <td>{{ computer.name }}</td>
         <td>{{ computer.user.username }}</td>
-        <td>dolor</td>
-        <td>sit</td>
+        <td>{{ computer.start_time }}</td>
+        <td>{{ now_time-computer.start_time }}</td>
+        <td>{{ now_time-computer.start_time }}</td>
       </tr>
       {% endif %}
       {% endfor %}

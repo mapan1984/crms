@@ -24,16 +24,14 @@ def index():
                 return redirect(request.args.get('next') or url_for('manage.all_computers'))
             elif not user.is_admin:
                 login_user(user, form.remember_me.data)
-                computer_list=Computer.query.all()
-                for computer in computer_list:
-                    if computer.user == None:
-                        computer.user = user
-                        db.session.add(computer)
-                        break
+                free_computer = Computer.query.filter_by(user=None).first()
+                free_computer.user = user
+                db.session.add(free_computer)
                 session['current_user_id']=user.id
                 return redirect(request.args.get('next') or url_for('user.information'))
         flash('无效密码')
     return render_template('index.html', form=form)
+
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
@@ -43,6 +41,6 @@ def register():
                     username=form.username.data,
                     password=form.password.data)
         db.session.add(user)
-        flash('你现在可以登录')
+        flash('你现在可以登录了')
         return redirect(url_for('main.index'))
     return render_template('/register.html', form=form)

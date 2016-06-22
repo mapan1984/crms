@@ -6,6 +6,10 @@ from ..models import User, Computer
 from .forms import AddForm, DelForm
 
 # prefix 为注册路由自动加前缀/manage
+@manage.route('/all_computers')
+def all_computers():
+    return render_template('manage/all_computers.html', computer_list=Computer.query.all())
+
 @manage.route('/busy_computers')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def busy_computers():
@@ -54,5 +58,5 @@ def del_computers():
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def logout():
     logout_user()
-    flash('你现在已经退出')
+    flash('管理员mapan现在已经退出')
     return redirect(url_for('main.index'))

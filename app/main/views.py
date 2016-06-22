@@ -21,10 +21,11 @@ def index():
         if user is not None and user.verify_password(form.password.data):
             if user.is_admin:
                 login_user(user, form.remember_me.data)
-                return redirect(request.args.get('next') or url_for('main.manage_all_computers'))
+                return redirect(request.args.get('next') or url_for('manage.all_computers'))
             elif not user.is_admin:
                 login_user(user, form.remember_me.data)
-                return redirect(request.args.get('next') or url_for('main.user_user'))
+                session['current_user_id']=user.id
+                return redirect(request.args.get('next') or url_for('user.information'))
         flash('无效密码')
     return render_template('index.html', form=form)
 
@@ -39,11 +40,3 @@ def register():
         flash('你现在可以登录')
         return redirect(url_for('main.index'))
     return render_template('/register.html', form=form)
-
-@main.route('/manage/all_computers', methods=['get', 'post'])
-def manage_all_computers():
-    return render_template('manage/all_computers.html', computer_list=Computer.query.all())
-
-@main.route('/user/user', methods=['get', 'post'])
-def user_user():
-    return render_template('user/user.html')

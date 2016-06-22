@@ -1,6 +1,0 @@
-{% extends "_layouts/user_default.html" %}
-
-{% block user_content %}
-  <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-  <p>一些你的使用信息</p>
-{% endblock %}

@@ -15,7 +15,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ url_for('main.manage_all_computers') }}">机房管理系统</a>
+      <a class="navbar-brand" href="{{ url_for('manage.all_computers') }}">机房管理系统</a>
     </div>
     <div class="navbar-collapse collapse" id="navbar">
       <ul class="nav navbar-nav navbar-right">
@@ -34,7 +34,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li ><a href="{{ url_for('main.manage_all_computers') }}">全局视图<span class="sr-only">(current)</span></a></li>
+        <li ><a href="{{ url_for('manage.all_computers') }}">全局视图<span class="sr-only">(current)</span></a></li>
         <li><a href="{{ url_for('manage.busy_computers') }}">已使用机器</a></li>
         <li><a href="{{ url_for('manage.free_computers') }}">空闲机器</a></li>
         <li><a href="{{ url_for('manage.add_computers') }}">添加机器</a></li>

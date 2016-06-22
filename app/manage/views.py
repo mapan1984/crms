@@ -7,17 +7,18 @@ from .forms import AddForm, DelForm
 
 # prefix 为注册路由自动加前缀/manage
 @manage.route('/all_computers')
+@login_required
 def all_computers():
     return render_template('manage/all_computers.html', computer_list=Computer.query.all())
 
 @manage.route('/busy_computers')
-@login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
+@login_required
 def busy_computers():
     return render_template('manage/busy_computers.html', 
                            computer_list=Computer.query.all())
 
 @manage.route('/free_computers')
-@login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
+@login_required
 def free_computers():
     return render_template('manage/free_computers.html', 
                            computer_list=Computer.query.all())
@@ -54,6 +55,13 @@ def del_computers():
     return render_template('manage/del_computers.html', 
                            computer_list=Computer.query.all(),
                            del_form=del_form)
+
+@manage.route('/all_users')
+@login_required
+def all_users():
+    return render_template('manage/all_users.html', 
+                           user_list=User.query.all())
+
 @manage.route('/logout')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def logout():

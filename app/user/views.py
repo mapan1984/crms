@@ -6,7 +6,7 @@ from ..models import User
 
 # prefix 为注册路由自动加前缀/user
 @user.route('/user', methods=['get', 'post'])
-def information():
+def information(): # flask-login提供的修饰器，保护路由只能由登陆用户访问
     current_user = User.query.filter_by(id=session.get('current_user_id')).first()
     current_user_computer = current_user.computers.first()
     return render_template('user/information.html', 
@@ -14,7 +14,7 @@ def information():
                            user_computer=current_user_computer)
 
 @user.route('/logout')
-@login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
+@login_required
 def logout():
     current_user = User.query.filter_by(id=session.get('current_user_id')).first()
     current_user_computer = current_user.computers.first()

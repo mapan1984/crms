@@ -1,11 +1,7 @@
 {% extends "_layouts/manage_default.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block manage_content %}
-<div class="page-header">
-  <!-- current_user 由Flask-Login定义，在视图函数和模板中自动可用-->
-  <h1>hello, 管理员{% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-</div>
-<h2 class="sub-header">空闲电脑</h2>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -19,18 +15,21 @@
       </tr>
     </thead>
     <tbody>
-      {% for computer in computer_list %}
-      {% if computer.user == None %}
       <tr>
         <td>{{ computer.id }}</td>
         <td>{{ computer.name }}</td>
+        {% if computer.user != None %}
+        <td>{{ computer.user.username }}</td>
+        <td>{{ computer.start_time }}</td>
+        <td>{{ computer.spend_time }}</td>
+        <td>{{ computer.spend_time }}</td>
+        {% else %}
         <td>无</td>
         <td>无</td>
         <td>无</td>
         <td>无</td>
+        {% endif %}
       </tr>
-      {% endif %}
-      {% endfor %}
     </tbody>
   </table>
 </div>

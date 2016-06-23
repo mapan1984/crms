@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, login_required
 from .. import db
 from . import manage
 from ..models import User, Computer
-from .forms import AddForm, DelForm
+from .forms import AddForm, DelForm, SearchForm
 
 import functools
 
@@ -19,12 +19,32 @@ def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信
 
 
 # prefix 为注册路由自动加前缀/manage
-@manage.route('/all_computers')
+@manage.route('/all_computers', methods=['GET', 'POST'])
 @login_required
 @all_computers_refresh
 def all_computers():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        computer = Computer.query.filter_by(name=search_form.name.data).first()
+        if computer is not None:
+            session['search_computer_name'] = search_form.name.data 
+            return redirect(url_for('manage.computer'))
     return render_template('manage/all_computers.html', 
-                           computer_list=Computer.query.all())
+                           computer_list=Computer.query.all(),
+                           search_form=search_form)
+
+@manage.route('/computers', methods=['GET', 'POST'])
+@login_required
+@all_computers_refresh
+def computers():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        computer = Computer.query.filter_by(name=search_form.name.data).first()
+        if computer is not None:
+            return redirect(url_for('manage.computer'))
+    computer = Computer.query.filter_by(name=session.get('search_computer_name')).first()
+    return render_template('manage/computer.html', 
+                           search_form=search_form)
 
 @manage.route('/busy_computers')
 @login_required
@@ -86,8 +106,8 @@ def all_users():
 @login_required
 @all_computers_refresh
 def busy_users():
-    return render_template('manage/all_users.html', 
-                           busy_list=User.query.all())
+    return render_template('manage/busy_users.html', 
+                           user_list=User.query.all())
 
 @manage.route('/free_users')
 @login_required

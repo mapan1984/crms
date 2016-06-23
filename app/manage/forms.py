@@ -11,3 +11,7 @@ class AddForm(Form):
 class DelForm(Form):
     name = StringField('电脑编号', validators=[Required(), Length(1, 64)])
     submit = SubmitField('删除')
+
+class SearchForm(Form):
+    name = StringField('电脑编号', validators=[Required(), Length(1, 64)])
+    submit = SubmitField('搜索')

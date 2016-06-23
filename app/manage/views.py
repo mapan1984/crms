@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, session, url_for, flash
 from flask.ext.login import login_user, logout_user, login_required
 from .. import db
 from . import manage
@@ -6,6 +6,8 @@ from ..models import User, Computer
 from .forms import AddForm, DelForm, SearchForm
 
 import functools
+
+
 
 def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信息
     @functools.wraps(func)
@@ -23,42 +25,25 @@ def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信
 @login_required
 @all_computers_refresh
 def all_computers():
-    search_form = SearchForm()
-    if search_form.validate_on_submit():
-        computer = Computer.query.filter_by(name=search_form.name.data).first()
-        if computer is not None:
-            session['search_computer_name'] = search_form.name.data 
-            return redirect(url_for('manage.computer'))
     return render_template('manage/all_computers.html', 
                            computer_list=Computer.query.all(),
-                           search_form=search_form)
-
-@manage.route('/computers', methods=['GET', 'POST'])
-@login_required
-@all_computers_refresh
-def computers():
-    search_form = SearchForm()
-    if search_form.validate_on_submit():
-        computer = Computer.query.filter_by(name=search_form.name.data).first()
-        if computer is not None:
-            return redirect(url_for('manage.computer'))
-    computer = Computer.query.filter_by(name=session.get('search_computer_name')).first()
-    return render_template('manage/computer.html', 
-                           search_form=search_form)
+                           search_form=SearchForm())
 
 @manage.route('/busy_computers')
 @login_required
 @all_computers_refresh
 def busy_computers():
     return render_template('manage/busy_computers.html', 
-                           computer_list=Computer.query.all())
+                           computer_list=Computer.query.all(),
+                           search_form=SearchForm())
 
 @manage.route('/free_computers')
 @login_required
 @all_computers_refresh
 def free_computers():
     return render_template('manage/free_computers.html', 
-                           computer_list=Computer.query.all())
+                           computer_list=Computer.query.all(),
+                           search_form=SearchForm())
 
 @manage.route('/add_computers', methods=['GET', 'POST'])
 @login_required
@@ -76,6 +61,7 @@ def add_computers():
         return redirect(url_for('manage.add_computers'))
     return render_template('manage/add_computers.html', 
                            computer_list=Computer.query.all(),
+                           search_form=SearchForm(),
                            add_form=add_form)
 
 @manage.route('/del_computers', methods=['GET', 'POST'])
@@ -93,6 +79,7 @@ def del_computers():
         return redirect(url_for('manage.del_computers'))
     return render_template('manage/del_computers.html', 
                            computer_list=Computer.query.all(),
+                           search_form=SearchForm(),
                            del_form=del_form)
 
 @manage.route('/all_users')
@@ -100,6 +87,7 @@ def del_computers():
 @all_computers_refresh
 def all_users():
     return render_template('manage/all_users.html', 
+                           search_form=SearchForm(),
                            user_list=User.query.all())
 
 @manage.route('/busy_users')
@@ -107,6 +95,7 @@ def all_users():
 @all_computers_refresh
 def busy_users():
     return render_template('manage/busy_users.html', 
+                           search_form=SearchForm(),
                            user_list=User.query.all())
 
 @manage.route('/free_users')
@@ -114,7 +103,21 @@ def busy_users():
 @all_computers_refresh
 def free_users():
     return render_template('manage/free_users.html', 
+                           search_form=SearchForm(),
                            user_list=User.query.all())
+
+@manage.route('/search_computer', methods=['GET', 'POST'])
+@login_required
+@all_computers_refresh
+def search_computer():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        computer = Computer.query.filter_by(name=search_form.name.data).first()
+        if computer is not None:
+            return redirect(url_for('manage.search_computer'))
+    computer = Computer.query.filter_by(name=search_form.name.data).first()
+    return render_template('manage/computer.html', computer=computer,
+                           search_form=search_form)
 
 @manage.route('/logout')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问

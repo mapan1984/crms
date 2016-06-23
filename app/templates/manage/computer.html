@@ -16,6 +16,7 @@
     </thead>
     <tbody>
       <tr>
+        {% if computer != None %}
         <td>{{ computer.id }}</td>
         <td>{{ computer.name }}</td>
         {% if computer.user != None %}
@@ -28,6 +29,7 @@
         <td>无</td>
         <td>无</td>
         <td>无</td>
+        {% endif %}
         {% endif %}
       </tr>
     </tbody>

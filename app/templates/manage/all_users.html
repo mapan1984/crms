@@ -24,9 +24,15 @@
         <td>{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
-        <td>{% if user.computers.first() != None %}{{ user.computers.first().name }}{% else %}无{% endif %}</td>
+        {% if user.computers.first() != None %}
+        <td>{{ user.computers.first().name }}</td>
         <td>{{ user.computers.first().spend_time }}</td>
         <td>{{ user.computers.first().spend_time }}</td>
+        {% else %}
+        <td>无</td>
+        <td>无</td>
+        <td>无</td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>

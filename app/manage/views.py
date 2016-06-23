@@ -82,6 +82,20 @@ def all_users():
     return render_template('manage/all_users.html', 
                            user_list=User.query.all())
 
+@manage.route('/busy_users')
+@login_required
+@all_computers_refresh
+def busy_users():
+    return render_template('manage/all_users.html', 
+                           busy_list=User.query.all())
+
+@manage.route('/free_users')
+@login_required
+@all_computers_refresh
+def free_users():
+    return render_template('manage/free_users.html', 
+                           user_list=User.query.all())
+
 @manage.route('/logout')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问
 def logout():

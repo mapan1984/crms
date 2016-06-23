@@ -41,9 +41,9 @@
         <li><a href="{{ url_for('manage.del_computers') }}">删除机器</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="{{ url_for('manage.all_users')}}">所有用户</a></li>
-        <li><a href="">在线用户</a></li>
-        <li><a href="">未在线用户</a></li>
+        <li><a href="{{ url_for('manage.all_users') }}">所有用户</a></li>
+        <li><a href="{{ url_for('manage.busy_users') }}">在线用户</a></li>
+        <li><a href="{{ url_for('manage.free_users') }}">未在线用户</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="">nav item again</a></li>

@@ -22,18 +22,12 @@
         <li><a href="#">设置</a></li>
         <li><a href="{{ url_for('manage.logout') }}">退出登录</a></li>
       </ul>
-      <form action="{{ url_for('manage.search_computer') }}" method="POST" class="navbar-form navbar-right" role="search">
-        {% if search_form %}
+      <form action="{{ url_for('manage.search_computer') }}" method="POST" 
+        class="navbar-form navbar-right" role="search">
         <div class="form-group">
           {{ search_form.name(class="form-control", placeholder="搜索...") }}
         </div>
         {{ search_form.submit(class="btn btn-default")}}
-        {% else %}
-        <div class="form-group">
-          <input class="form-control" type="text" placeholder="搜索...">
-        </div>
-        <button type="submit" class="btn btn-default">搜索</button>
-        {% endif %}
       </form>
     </div>
   </div>
@@ -42,7 +36,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li ><a href="{{ url_for('manage.all_computers') }}">全局视图<span class="sr-only">(current)</span></a></li>
+        <li><a href="{{ url_for('manage.all_computers') }}">全局视图</a></li>
         <li><a href="{{ url_for('manage.busy_computers') }}">已使用机器</a></li>
         <li><a href="{{ url_for('manage.free_computers') }}">空闲机器</a></li>
         <li><a href="{{ url_for('manage.add_computers') }}">添加机器</a></li>

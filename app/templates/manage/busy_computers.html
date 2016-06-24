@@ -25,8 +25,8 @@
         <td>{{ computer.id }}</td>
         <td>{{ computer.name }}</td>
         <td>{{ computer.user.username }}</td>
-        <td>{{ computer.start_time }}</td>
-        <td class="spend_time">{{ computer.spend_time }}</td>
+        <td>{{ computer.start_time.__str__().split('.')[0] }}</td>
+        <td class="spend_time">{{ computer.spend_time.__str__().split('.')[0] }}</td>
         <td class="spend_money">{{ computer.spend_time.seconds }}</td>
       </tr>
       {% endif %}

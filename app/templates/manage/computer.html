@@ -21,8 +21,8 @@
         <td>{{ computer.name }}</td>
         {% if computer.user != None %}
         <td>{{ computer.user.username }}</td>
-        <td>{{ computer.start_time }}</td>
-        <td class="spend_time">{{ computer.spend_time }}</td>
+        <td>{{ computer.start_time.__str__().split('.')[0] }}</td>
+        <td class="spend_time">{{ computer.spend_time.__str__().split('.')[0] }}</td>
         <td class="spend_money">{{ computer.spend_time.seconds }}</td>
         {% else %}
         <td>无</td>

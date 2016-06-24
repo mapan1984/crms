@@ -1,0 +1,17 @@
+{% for computer in computer_list %}
+<tr>
+  <td>{{ computer.id }}</td>
+  <td>{{ computer.name }}</td>
+  {% if computer.user != None %}
+  <td>{{ computer.user.username }}</td>
+  <td>{{ computer.start_time.__str__().split('.')[0] }}</td>
+  <td class="spend_time">{{ computer.spend_time.__str__().split('.')[0] }}</td>
+  <td class="spend_money">{{ computer.spend_time.seconds }}</td>
+  {% else %}
+  <td>无</td>
+  <td>无</td>
+  <td>无</td>
+  <td>无</td>
+  {% endif %}
+</tr>
+{% endfor %}

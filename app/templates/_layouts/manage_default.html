@@ -36,7 +36,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a href="{{ url_for('manage.all_computers') }}">全局视图</a></li>
+        <li><a href="{{ url_for('manage.all_computers') }}">所有机器</a></li>
         <li><a href="{{ url_for('manage.busy_computers') }}">已使用机器</a></li>
         <li><a href="{{ url_for('manage.free_computers') }}">空闲机器</a></li>
         <li><a href="{{ url_for('manage.add_computers') }}">添加机器</a></li>
@@ -46,11 +46,13 @@
         <li><a href="{{ url_for('manage.all_users') }}">所有用户</a></li>
         <li><a href="{{ url_for('manage.busy_users') }}">在线用户</a></li>
         <li><a href="{{ url_for('manage.free_users') }}">未在线用户</a></li>
+        <li><a href="{{ url_for('manage.add_users') }}">添加用户</a></li>
+        <li><a href="{{ url_for('manage.del_users') }}">删除用户</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="">nav item again</a></li>
-        <li><a href="">one more nav</a></li>
-        <li><a href="">another nav item</a></li>
+        <li><a href="">更改价格</a></li>
+        <li><a href="">more ....</a></li>
+        <li><a href="">more ....</a></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

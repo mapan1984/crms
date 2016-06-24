@@ -45,7 +45,7 @@ def free_computers():
                            computer_list=Computer.query.all(),
                            search_form=SearchForm())
 
-@manage.route('/add_computers', methods=['GET', 'POST'])
+@manage.route('/add_computers', methods=['get', 'post'])
 @login_required
 @all_computers_refresh
 def add_computers():
@@ -106,6 +106,43 @@ def free_users():
                            search_form=SearchForm(),
                            user_list=User.query.all())
 
+@manage.route('/add_users', methods=['get', 'post'])
+@login_required
+@all_computers_refresh
+def add_users():
+    add_form = AddForm()
+    if add_form.validate_on_submit():
+        computer = Computer.query.filter_by(name=add_form.name.data).first()
+        if computer == None:
+            c = Computer(name=add_form.name.data)
+            db.session.add(c)
+            flash('添加成功，电脑已添加')
+        else:
+            flash('添加失败，电脑已存在')
+        return redirect(url_for('manage.add_computers'))
+    return render_template('manage/add_computers.html', 
+                           computer_list=Computer.query.all(),
+                           search_form=SearchForm(),
+                           add_form=add_form)
+
+@manage.route('/del_users', methods=['GET', 'POST'])
+@login_required
+@all_computers_refresh
+def del_users():
+    del_form = DelForm()
+    if del_form.validate_on_submit():
+        computer = Computer.query.filter_by(name=del_form.name.data).first()
+        if computer != None:
+            db.session.delete(computer)
+            flash('删除成功，电脑已删除')
+        else:
+            flash('删除失败，电脑不存在')
+        return redirect(url_for('manage.del_computers'))
+    return render_template('manage/del_computers.html', 
+                           computer_list=Computer.query.all(),
+                           search_form=SearchForm(),
+                           del_form=del_form)
+
 @manage.route('/search_computer', methods=['GET', 'POST'])
 @login_required
 @all_computers_refresh
@@ -116,8 +153,9 @@ def search_computer():
         if computer is not None:
             return redirect(url_for('manage.search_computer'))
         else:
-            message = "".join([search_form_data, "不存在"])
+            message = "".join([search_form.name.data, "不存在"])
             flash(message)
+            return redirect(url_for('manage.search_computers'))
     computer = Computer.query.filter_by(name=search_form.name.data).first()
     return render_template('manage/computer.html', computer=computer,
                            search_form=search_form)

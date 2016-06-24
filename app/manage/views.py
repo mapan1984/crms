@@ -115,6 +115,9 @@ def search_computer():
         computer = Computer.query.filter_by(name=search_form.name.data).first()
         if computer is not None:
             return redirect(url_for('manage.search_computer'))
+        else:
+            message = "".join([search_form_data, "不存在"])
+            flash(message)
     computer = Computer.query.filter_by(name=search_form.name.data).first()
     return render_template('manage/computer.html', computer=computer,
                            search_form=search_form)

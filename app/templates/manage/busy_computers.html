@@ -27,7 +27,7 @@
         <td>{{ computer.user.username }}</td>
         <td>{{ computer.start_time }}</td>
         <td class="spend_time">{{ computer.spend_time }}</td>
-        <td>{{ computer.spend_time }}</td>
+        <td class="spend_money">{{ computer.spend_time.seconds }}</td>
       </tr>
       {% endif %}
       {% endfor %}

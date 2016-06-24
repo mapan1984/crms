@@ -27,7 +27,7 @@
         {% if user.computers.first() != None %}
         <td>{{ user.computers.first().name }}</td>
         <td class="spend_time">{{ user.computers.first().spend_time }}</td>
-        <td>{{ user.computers.first().spend_time }}</td>
+        <td class="spend_money">{{ user.computers.first().spend_time.seconds }}</td>
         {% else %}
         <td>无</td>
         <td>无</td>

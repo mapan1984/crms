@@ -11,8 +11,10 @@ $(document).ready(function() {
             st.text(h+':0'+m+':0'+s);
         }else if(s < 10){
             st.text(h+':'+m+':0'+s);
-        }else{
+        }else if(m < 10){
             st.text(h+':0'+m+':'+s);
+        }else{
+            st.text(h+':'+m+':'+s);
         }
         s = s + 1;
         if(s == 60){
@@ -23,5 +25,14 @@ $(document).ready(function() {
             m = 0;
             h = h +1;
         }
+    },1000);
+
+    var sm = $('td.spend_money');
+    var spend_money = sm.text()
+    spend_money = parseInt(spend_money)
+    setInterval(function(){
+        //spend_money = (spend_money + 1)/360;
+        spend_money = spend_money + 1;
+        sm.text(spend_money);
     },1000);
 });

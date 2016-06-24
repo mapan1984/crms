@@ -27,7 +27,7 @@
         <td>{{ user.email }}</td>
         <td>{{ user.computers.first().name }}</td>
         <td class="spend_time">{{ user.computers.first().spend_time }}</td>
-        <td>{{ user.computers.first().spend_time }}</td>
+        <td class="spend_money">{{ user.computers.first().spend_time.seconds }}</td>
       </tr>
       {% endif %}
       {% endfor %}

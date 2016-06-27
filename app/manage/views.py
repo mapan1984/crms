@@ -7,7 +7,6 @@ from ..models import User, Computer
 
 import functools
 
-
 def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信息
     @functools.wraps(func)
     def wrapper(*args, **kw):
@@ -17,7 +16,6 @@ def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信
             db.session.add(computer)
         return func(*args, **kw)
     return wrapper
-
 
 # prefix 为注册路由自动加前缀/manage
 @manage.route('/all_computers', methods=['GET', 'POST'])
@@ -167,6 +165,8 @@ def computer(computer_name):
         db.session.add(computer)
         flash('电脑信息已更新')
         return redirect(url_for('manage.computer', computer_name=computer.name))
+    edit_profile_form.name.data = computer.name
+    edit_profile_form.memo.data = computer.memo
     return render_template('manage/computer.html', computer=computer,
                            search_form=SearchForm(), edit_profile_form=edit_profile_form)
 

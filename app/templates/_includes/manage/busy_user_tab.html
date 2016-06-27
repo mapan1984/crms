@@ -14,9 +14,9 @@
     {% if user.computers.first() != none %}
     <tr>
       <td>{{ user.id }}</td>
-      <td>{{ user.username }}</td>
+      <td><a href="{{ url_for('user.information', user_name=user.username) }}">{{ user.username }}</a></td>
       <td>{{ user.email }}</td>
-      <td>{{ user.computers.first().name }}</td>
+      <td><a href="{{ url_for('manage.computer', computer_name=user.computers.first().name)}}">{{ user.computers.first().name }}</a></td>
       <td class="spend_time">{{ user.computers.first().spend_time.__str__().split('.')[0] }}</td>
       <td class="spend_money">{{ user.computers.first().spend_time.seconds }}</td>
     </tr>

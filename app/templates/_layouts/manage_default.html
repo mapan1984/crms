@@ -22,7 +22,7 @@
         <li><a href="#">设置</a></li>
         <li><a href="{{ url_for('manage.logout') }}">退出登录</a></li>
       </ul>
-      <form action="{{ url_for('manage.search_computer') }}" method="POST" 
+      <form action="{{ url_for('manage.search_computer') }}" method="post" 
         class="navbar-form navbar-right" role="search">
         <div class="form-group">
           {{ search_form.name(class="form-control", placeholder="搜索...") }}

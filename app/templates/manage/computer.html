@@ -3,17 +3,16 @@
 
 {% block manage_content %}
 <div class="page-header">
-    <h1>{{ computer.name }}</h1>
-    {% if computer.memo %}<p>{{ computer.memo }}</p>{% endif %}
-    <p>Member since {{ computer.start_time.__str__().split('.')[0] }}. Spend_time {{ computer.spend_time.__str__().split('.')[0] }}.</p>
+  <h1>电脑编号: {{ computer.name }}</h1>
 </div>
+<h2 class="sub-header">备忘: {{ computer.memo }}</h2>
 <div class="row">
-  <div class="col-md-8">.col-md-8</div>
+  <div class="col-md-6">
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>计算机id</th>
+            <th>计算机ID</th>
             <th>计算机编号</th>
             <th>计算机使用者</th>
             <th>上机开始时间</th>
@@ -42,7 +41,8 @@
         </tbody>
       </table>
     </div>
-  <div class="col-md-4">
+  </div>
+  <div class="col-md-6">
     {{ wtf.quick_form(edit_profile_form) }}
   </div>
 </div>

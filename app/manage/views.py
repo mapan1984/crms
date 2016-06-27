@@ -1,12 +1,11 @@
-from flask import render_template, redirect, request, session, url_for, flash
-from flask.ext.login import login_user, logout_user, login_required
-from .. import db
+from flask import render_template, redirect, request, session, url_for, flash, abort
+from flask.ext.login import login_user, logout_user, login_required, current_user
 from . import manage
+from .forms import AddForm, DelForm, SearchForm, EditProfileForm
+from .. import db
 from ..models import User, Computer
-from .forms import AddForm, DelForm, SearchForm
 
 import functools
-
 
 
 def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信息
@@ -143,22 +142,33 @@ def del_users():
                            search_form=SearchForm(),
                            del_form=del_form)
 
-@manage.route('/search_computer', methods=['GET', 'POST'])
+@manage.route('/search_computer', methods=['POST'])
 @login_required
 @all_computers_refresh
 def search_computer():
     search_form = SearchForm()
-    if search_form.validate_on_submit():
-        computer = Computer.query.filter_by(name=search_form.name.data).first()
-        if computer is not None:
-            return redirect(url_for('manage.search_computer'))
-        else:
-            message = "".join([search_form.name.data, "不存在"])
-            flash(message)
-            return redirect(url_for('manage.search_computers'))
     computer = Computer.query.filter_by(name=search_form.name.data).first()
+    if computer is not None:
+        return redirect(url_for('manage.computer', computer_name=computer.name))
+    else:
+        abort(404)
+
+@manage.route('/computer/<computer_name>', methods=['GET', 'POST'])
+@login_required
+@all_computers_refresh
+def computer(computer_name):
+    edit_profile_form = EditProfileForm()
+    computer = Computer.query.filter_by(name=computer_name).first()
+    if computer is None:
+        abort(404)
+    if edit_profile_form.validate_on_submit():
+        computer.name = edit_profile_form.name.data
+        computer.memo = edit_profile_form.memo.data
+        db.session.add(computer)
+        flash('电脑信息已更新')
+        return redirect(url_for('manage.computer', computer_name=computer.name))
     return render_template('manage/computer.html', computer=computer,
-                           search_form=search_form)
+                           search_form=SearchForm(), edit_profile_form=edit_profile_form)
 
 @manage.route('/logout')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问

@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+   <tr>
+      <th>计算机ID</th>
+      <th>计算机编号</th>
+      <th>计算机使用者</th>
+      <th>上机开始时间</th>
+      <th>上机花费时间</th>
+      <th>上机费用</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for computer in computer_list %}
+    {% if computer.user != None %}
+    <tr>
+      <td>{{ computer.id }}</td>
+      <td><a href="{{ url_for('manage.computer', computer_name=computer.name)}}">{{ computer.name }}</a></td>
+      <td>{{ computer.user.username }}</td>
+      <td>{{ computer.start_time.__str__().split('.')[0] }}</td>
+      <td class="spend_time">{{ computer.spend_time.__str__().split('.')[0] }}</td>
+      <td class="spend_money">{{ computer.spend_time.seconds }}</td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </tbody>
+</table>

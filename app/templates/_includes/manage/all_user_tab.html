@@ -1,0 +1,30 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>用户ID</th>
+      <th>用户名</th>
+      <th>用户邮箱</th>
+      <th>使用电脑</th>
+      <th>上机时间</th>
+      <th>上机费用</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in user_list %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      {% if user.computers.first() != None %}
+      <td>{{ user.computers.first().name }}</td>
+      <td class="spend_time">{{ user.computers.first().spend_time.__str__().split('.')[0] }}</td>
+      <td class="spend_money">{{ user.computers.first().spend_time.seconds }}</td>
+      {% else %}
+      <td>无</td>
+      <td>无</td>
+      <td>无</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

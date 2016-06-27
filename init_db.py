@@ -20,6 +20,7 @@ c3 = Computer(name='c3')
 c4 = Computer(name='c4')
 c5 = Computer(name='c5')
 c6 = Computer(name='c6')
+c1.memo = "i an c1, lalala , i am the best computer"
 
 # 通过db.session管理数据库的改动
 db.session.add_all([c1, c2, c3, c4, c5, c6, admin_mapan, user_other])

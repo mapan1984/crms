@@ -7,31 +7,6 @@
 </div>
 <h2 class="sub-header">空闲电脑</h2>
 <div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>计算机id</th>
-        <th>计算机编号</th>
-        <th>计算机使用者</th>
-        <th>上机开始时间</th>
-        <th>上机花费时间</th>
-        <th>上机费用</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for computer in computer_list %}
-      {% if computer.user == None %}
-      <tr>
-        <td>{{ computer.id }}</td>
-        <td>{{ computer.name }}</td>
-        <td>无</td>
-        <td>无</td>
-        <td>无</td>
-        <td>无</td>
-      </tr>
-      {% endif %}
-      {% endfor %}
-    </tbody>
-  </table>
+  {% include '_includes/manage/free_computer_tab.html' %}
 </div>
 {% endblock %}

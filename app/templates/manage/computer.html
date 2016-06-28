@@ -3,11 +3,9 @@
 
 {% block manage_content %}
 <div class="page-header">
-  <h1>电脑编号: {{ computer.name }}</h1>
+  <h1>电脑{{ computer.name }}详细信息</h1>
+  <p>备忘信息: {{ computer.memo }}</p>
 </div>
-<h2 class="sub-header">备忘: {{ computer.memo }}</h2>
-<div class="row">
-  <div class="col-md-6">
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -41,9 +39,5 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="col-md-6">
     {{ wtf.quick_form(edit_profile_form) }}
-  </div>
-</div>
 {% endblock %}

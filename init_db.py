@@ -20,7 +20,12 @@ c3 = Computer(name='c3')
 c4 = Computer(name='c4')
 c5 = Computer(name='c5')
 c6 = Computer(name='c6')
-c1.memo = "i an c1, lalala , i am the best computer"
+c1.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 Graphics 2.00GHZ 产品编号：80E1 BIOS: A2CN24WWV1.06 Lenovo G4045 Windows 10 Home China (x64)"
+c2.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 Graphics 2.00GHZ 产品编号：80E1 BIOS: A2CN24WWV1.06 Lenovo G4045 Windows 10 Home China (x64)"
+c3.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 Graphics 2.00GHZ 产品编号：80E1 BIOS: A2CN24WWV1.06 Lenovo G4045 Windows 10 Home China (x64)"
+c4.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 Graphics 2.00GHZ 产品编号：80E1 BIOS: A2CN24WWV1.06 Lenovo G4045 Windows 10 Home China (x64)"
+c5.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 Graphics 2.00GHZ 产品编号：80E1 BIOS: A2CN24WWV1.06 Lenovo G4045 Windows 10 Home China (x64)"
+c6.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 Graphics 2.00GHZ 产品编号：80E1 BIOS: A2CN24WWV1.06 Lenovo G4045 Windows 10 Home China (x64)"
 
 # 通过db.session管理数据库的改动
 db.session.add_all([c1, c2, c3, c4, c5, c6, admin_mapan, user_other])

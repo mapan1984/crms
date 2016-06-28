@@ -38,7 +38,7 @@ def index():
                                 url_for('user.information', user_name=user.username))
         else:
             flash('无效密码')
-    return render_template('index.html', form=form)
+    return render_template('index.html', form=form, current_time=datetime.datetime.utcnow())
 
 
 @main.route('/register', methods=['GET', 'POST'])

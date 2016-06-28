@@ -1,7 +1,8 @@
 from flask import render_template, redirect, request, session, url_for, flash, abort
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from . import manage
-from .forms import AddForm, DelForm, SearchForm, EditProfileForm
+from .forms import AddComputerForm, DelComputerForm, AddUserForm,\
+                  DelUserForm, SearchForm, EditProfileForm
 from .. import db
 from ..models import User, Computer
 
@@ -46,11 +47,11 @@ def free_computers():
 @login_required
 @all_computers_refresh
 def add_computers():
-    add_form = AddForm()
+    add_form = AddComputerForm()
     if add_form.validate_on_submit():
         computer = Computer.query.filter_by(name=add_form.name.data).first()
         if computer == None:
-            c = Computer(name=add_form.name.data)
+            c = Computer(name=add_form.name.data, memo=add_form.memo.data)
             db.session.add(c)
             flash('添加成功，电脑已添加')
         else:
@@ -65,7 +66,7 @@ def add_computers():
 @login_required
 @all_computers_refresh
 def del_computers():
-    del_form = DelForm()
+    del_form = DelComputerForm()
     if del_form.validate_on_submit():
         computer = Computer.query.filter_by(name=del_form.name.data).first()
         if computer != None:
@@ -107,18 +108,18 @@ def free_users():
 @login_required
 @all_computers_refresh
 def add_users():
-    add_form = AddForm()
+    add_form = AddUserForm()
     if add_form.validate_on_submit():
-        computer = Computer.query.filter_by(name=add_form.name.data).first()
-        if computer == None:
-            c = Computer(name=add_form.name.data)
-            db.session.add(c)
-            flash('添加成功，电脑已添加')
+        user = User.query.filter_by(username=add_form.name.data).first()
+        if user == None:
+            u = User(username=add_form.name.data)
+            db.session.add(u)
+            flash('添加成功，用户已添加')
         else:
-            flash('添加失败，电脑已存在')
-        return redirect(url_for('manage.add_computers'))
-    return render_template('manage/add_computers.html', 
-                           computer_list=Computer.query.all(),
+            flash('添加失败，用户已存在')
+        return redirect(url_for('manage.add_users'))
+    return render_template('manage/add_users.html', 
+                           user_list=User.query.all(),
                            search_form=SearchForm(),
                            add_form=add_form)
 
@@ -126,17 +127,17 @@ def add_users():
 @login_required
 @all_computers_refresh
 def del_users():
-    del_form = DelForm()
+    del_form = DelUserForm()
     if del_form.validate_on_submit():
-        computer = Computer.query.filter_by(name=del_form.name.data).first()
-        if computer != None:
-            db.session.delete(computer)
-            flash('删除成功，电脑已删除')
+        user = User.query.filter_by(username=del_form.name.data).first()
+        if user != None:
+            db.session.delete(user)
+            flash('删除成功，用户已删除')
         else:
-            flash('删除失败，电脑不存在')
-        return redirect(url_for('manage.del_computers'))
-    return render_template('manage/del_computers.html', 
-                           computer_list=Computer.query.all(),
+            flash('删除失败，用户不存在')
+        return redirect(url_for('manage.del_users'))
+    return render_template('manage/del_users.html', 
+                           user_list=User.query.all(),
                            search_form=SearchForm(),
                            del_form=del_form)
 

@@ -10,7 +10,10 @@
 
   {% block content %}{% endblock %}
 
-  {% block js %} {% include '_includes/js.html' %} {% endblock %}
+  {% block js %} 
+  {% include '_includes/js.html' %} 
+  {{ moment.include_moment() }}
+  {% endblock %}
 </body>
 </html>
 {% endblock %}

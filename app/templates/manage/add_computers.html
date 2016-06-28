@@ -6,35 +6,6 @@
      {{ wtf.quick_form(add_form) }}
 </div>
 <div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>计算机ID</th>
-        <th>计算机编号</th>
-        <th>计算机使用者</th>
-        <th>上机开始时间</th>
-        <th>上级费用</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for computer in computer_list %}
-      <tr>
-        <td>{{ computer.id }}</td>
-        <td>{{ computer.name }}</td>
-        {% if computer.user != None %}
-        <td>{{ computer.user.username }}</td>
-        <td>{{ computer.start_time }}</td>
-        <td>{{ now_time-computer.start_time }}</td>
-        <td>{{ now_time-computer.start_time }}</td>
-        {% else %}
-        <td>无</td>
-        <td>无</td>
-        <td>无</td>
-        <td>无</td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% include '_includes/manage/all_computer_tab.html' %}
 </div>
 {% endblock %}

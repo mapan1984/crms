@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>用户ID</th>
+      <th>用户名</th>
+      <th>用户邮箱</th>
+      <th>使用电脑</th>
+      <th>上机时间</th>
+      <th>上机费用</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in user_list %}
+    {% if user.computers.first() == None %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td><a href="{{ url_for('user.information', user_name=user.username) }}">{{ user.username }}</a></td>
+      <td>{{ user.email }}</td>
+      <td>无</td>
+      <td>无</td>
+      <td>无</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </tbody>
+</table>

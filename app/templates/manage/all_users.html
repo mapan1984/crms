@@ -7,29 +7,6 @@
 </div>
 <h2 class="sub-header">所有用户</h2>
 <div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>用户ID</th>
-        <th>用户名</th>
-        <th>用户邮箱</th>
-        <th>使用电脑</th>
-        <th>上机时间</th>
-        <th>上机费用</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in user_list %}
-      <tr>
-        <td>{{ user.id }}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td>{% if user.computers.first() != None %}{{ user.computers.first().name }}{% else %}无{% endif %}</td>
-        <td>1111</td>
-        <td>1111</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% include '_includes/manage/all_user_tab.html' %}
 </div>
 {% endblock %}

@@ -11,16 +11,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ url_for('user.information') }}">机房管理系统</a>
+      <a class="navbar-brand" href="{% if current_user.is_admin %}{{ url_for('manage.all_computers') }}{% else %}{{ url_for('user.information', user_name=current_user.username) }}{% endif %}">机房管理系统</a>
     </div>
     <div class="navbar-collapse collapse" id="navbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url_for('user.logout') }}">退出登录</a></li>
+        <li><a href="{% if current_user.is_admin %}{{ url_for('manage.logout') }}{% else %}{{ url_for('user.logout') }}{% endif %}">退出登录</a></li>
       </ul>
     </div>
   </div>
 </nav>
 <div class="container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+  {% endfor %}
   {% block user_content %}{% endblock %}
 </div>
 {% endblock %}

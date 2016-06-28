@@ -23,10 +23,17 @@
         <td>{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
+        {% if user_computer %}
         <td>{{ user_computer.name }}</td>
-        <td>{{ user_computer.start_time }}</td>
-        <td>{{ user_computer.spend_time }}</td>
-        <td>{{ user_computer.spend_time }}</td>
+        <td>{{ user_computer.start_time.__str__().split('.')[0] }}</td>
+        <td class="spend_time">{{ user_computer.spend_time.__str__().split('.')[0] }}</td>
+        <td class="spend_money">{{ user_computer.spend_money }}</td>
+        {% else %}
+        <td></td>
+        <td></td>
+        <td class="spend_time"></td>
+        <td class="spend_money"></td>
+        {% endif %} 
       </tr>
     </tbody>
   </table>

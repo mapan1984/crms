@@ -8,12 +8,21 @@ class Computer(db.Model):
     __tablename__ = 'computers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
-    start_time = db.Column(db.DateTime)
-    end_time = db.Column(db.DateTime)
-    spend_time = db.Column(db.Interval)
+    memo = db.Column(db.Text())
+    start_time = db.Column(db.DateTime())
+    spend_time = db.Column(db.Interval())
+    spend_money = db.Column(db.Float())
+
     # 外键,值为表computers的id,类型为Integer
     # user_id可以为空，表示现在没有用户
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) 
+
+    def refresh(self):
+        if self.start_time is not None:
+            self.spend_time = datetime.datetime.now() - self.start_time
+            self.spend_money = self.spend_time.seconds
+        else:
+            pass
 
     def __repr__(self):
         return '<Computer %r>' % self.name

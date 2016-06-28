@@ -11,8 +11,9 @@ from ..models import User
 def information(user_name): # flask-login提供的修饰器，保护路由只能由登陆用户访问
     current_user = User.query.filter_by(username=user_name).first()
     current_user_computer = current_user.computers.first()
-    current_user_computer.refresh()
-    db.session.add(current_user_computer)
+    if current_user_computer is not None:
+        current_user_computer.refresh()
+        db.session.add(current_user_computer)
     return render_template('user/information.html', 
                            user=current_user,
                            user_computer=current_user_computer)

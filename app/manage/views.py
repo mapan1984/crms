@@ -110,9 +110,10 @@ def free_users():
 def add_users():
     add_form = AddUserForm()
     if add_form.validate_on_submit():
-        user = User.query.filter_by(username=add_form.name.data).first()
+        user = User.query.filter_by(username=add_form.username.data).first()
         if user == None:
-            u = User(username=add_form.name.data)
+            u = User(username=add_form.username.data, email=add_form.email.data, 
+                     password=add_form.password.data)
             db.session.add(u)
             flash('添加成功，用户已添加')
         else:
@@ -147,8 +148,11 @@ def del_users():
 def search_computer():
     search_form = SearchForm()
     computer = Computer.query.filter_by(name=search_form.name.data).first()
+    user = User.query.filter_by(username=search_form.name.data).first()
     if computer is not None:
         return redirect(url_for('manage.computer', computer_name=computer.name))
+    elif user is not None:
+        return redirect(url_for('user.information', user_name=user.username))
     else:
         abort(404)
 

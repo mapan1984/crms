@@ -18,7 +18,7 @@
       <td>{{ user.email }}</td>
       <td><a href="{{ url_for('manage.computer', computer_name=user.computers.first().name)}}">{{ user.computers.first().name }}</a></td>
       <td class="spend_time">{{ user.computers.first().spend_time.__str__().split('.')[0] }}</td>
-      <td class="spend_money">{{ user.computers.first().spend_time.seconds }}</td>
+      <td class="spend_money">{{ user.computers.first().spend_money }}</td>
     </tr>
     {% endif %}
     {% endfor %}

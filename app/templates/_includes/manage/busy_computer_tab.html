@@ -18,7 +18,7 @@
       <td><a href="{{ url_for('user.information', user_name=computer.user.username) }}">{{ computer.user.username }}</a></td>
       <td>{{ computer.start_time.__str__().split('.')[0] }}</td>
       <td class="spend_time">{{ computer.spend_time.__str__().split('.')[0] }}</td>
-      <td class="spend_money">{{ computer.spend_time.seconds }}</td>
+      <td class="spend_money">{{ computer.spend_money }}</td>
     </tr>
     {% endif %}
   {% endfor %}

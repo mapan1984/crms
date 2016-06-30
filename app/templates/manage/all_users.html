@@ -3,7 +3,7 @@
 {% block manage_content %}
 <div class="page-header">
   <!-- current_user 由flask-login定义，在视图函数和模板中自动可用-->
-  <h1>hello, 管理员{% if current_user.is_authenticated %}{{ current_user.username }}{% else %}stranger{% endif %}!</h1>
+  <h1>hello, {% if current_user.is_authenticated %}管理员{{ current_user.username }}{% else %}stranger{% endif %}!</h1>
 </div>
 <h2 class="sub-header">所有用户</h2>
 <div class="table-responsive">

@@ -21,7 +21,7 @@ class Computer(db.Model):
     def refresh(self):
         if self.start_time is not None:
             self.spend_time = datetime.datetime.now() - self.start_time
-            self.spend_money = (self.spend_time.seconds // 3600)*Computer.price
+            self.spend_money = (self.spend_time.seconds // 36)*Computer.price/100
         else:
             pass
 

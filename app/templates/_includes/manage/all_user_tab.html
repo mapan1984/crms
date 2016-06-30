@@ -7,6 +7,7 @@
       <th>使用电脑</th>
       <th>上机时间</th>
       <th>上机费用</th>
+      <th>上机次数</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
       <td>无</td>
       <td>无</td>
       {% endif %}
+      <td>{{ user.number }}</td>
     </tr>
     {% endfor %}
   </tbody>

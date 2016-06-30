@@ -6,6 +6,7 @@ import datetime
 
 class Computer(db.Model):
     __tablename__ = 'computers'
+    price = 3
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
     memo = db.Column(db.Text())
@@ -20,7 +21,7 @@ class Computer(db.Model):
     def refresh(self):
         if self.start_time is not None:
             self.spend_time = datetime.datetime.now() - self.start_time
-            self.spend_money = self.spend_time.seconds
+            self.spend_money = (self.spend_time.seconds // 36)*Computer.price/100
         else:
             pass
 
@@ -34,6 +35,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean)
+    number = db.Column(db.Integer, default=0)
     # computers属性返回与这个用户相关联的计算机组成的列表
     # 第一个参数Computer表示关联的模型
     # 第二个user向Computer模型中添加一个user属性

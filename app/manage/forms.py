@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
-                                                              TextAreaField
+                                             IntegerField, TextAreaField
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import Computer 
@@ -34,6 +34,10 @@ class DelUserForm(Form):
 class SearchForm(Form):
     name = StringField('电脑编号/用户名', validators=[Required(), Length(1, 64)])
     submit = SubmitField('搜索')
+
+class ChangeForm(Form):
+    price = IntegerField('价格', validators=[Required()])
+    submit = SubmitField('更改')
 
 class EditProfileForm(Form):
     name = StringField('修改电脑编号', validators=[Length(0, 64)])

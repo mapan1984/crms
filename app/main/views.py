@@ -28,10 +28,11 @@ def index():
             elif not user.is_admin:
                 login_user(user, form.remember_me.data)
                 if user.computers.first() == None: # 为用户分配电脑
+                    user.number = user.number + 1
                     free_computer = Computer.query.filter_by(user=None).first()
                     free_computer.user = user
                     free_computer.start_time = datetime.datetime.now()
-                    db.session.add(free_computer)
+                    db.session.add(free_computer, user)
                     flash("已为用户分配电脑")
                 #session['current_user_id']=user.id
                 return redirect(request.args.get('next') or \

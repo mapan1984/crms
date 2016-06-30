@@ -7,6 +7,7 @@
       <th>使用电脑</th>
       <th>上机时间</th>
       <th>上机费用</th>
+      <th>上机次数</th>
     </tr>
   </thead>
   <tbody>
@@ -19,6 +20,7 @@
       <td><a href="{{ url_for('manage.computer', computer_name=user.computers.first().name)}}">{{ user.computers.first().name }}</a></td>
       <td class="spend_time">{{ user.computers.first().spend_time.__str__().split('.')[0] }}</td>
       <td class="spend_money">{{ user.computers.first().spend_money }}</td>
+      <td>{{ user.number }}</td>
     </tr>
     {% endif %}
     {% endfor %}

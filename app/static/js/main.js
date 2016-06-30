@@ -27,6 +27,7 @@ $(document).ready(function() {
         }
     },1000);
 
+    /*
     var sm = $('td.spend_money');
     var spend_money = sm.text()
     spend_money = parseInt(spend_money)
@@ -35,4 +36,5 @@ $(document).ready(function() {
         spend_money = spend_money + 1;
         sm.text(spend_money);
     },1000);
+    */
 });

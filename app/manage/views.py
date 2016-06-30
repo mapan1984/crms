@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, session, url_for, flash, a
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from . import manage
 from .forms import AddComputerForm, DelComputerForm, AddUserForm,\
-                  DelUserForm, SearchForm, EditProfileForm
+                  DelUserForm, SearchForm, EditProfileForm, ChangeForm
 from .. import db
 from ..models import User, Computer
 
@@ -156,6 +156,20 @@ def search_computer():
     else:
         abort(404)
 
+@manage.route('/change_price', methods=['GET','POST'])
+@login_required
+@all_computers_refresh
+def change_price():
+    change_form = ChangeForm()
+    if change_form.validate_on_submit():
+        Computer.price = change_form.price.data
+        flash('价格更改成功')
+        return redirect(url_for('manage.change_price'))
+    return render_template('manage/change_price.html',
+                           search_form=SearchForm(),
+                           computer_list=Computer.query.all(),
+                           change_form=change_form)
+        
 @manage.route('/computer/<computer_name>', methods=['GET', 'POST'])
 @login_required
 @all_computers_refresh

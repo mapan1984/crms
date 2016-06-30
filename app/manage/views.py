@@ -165,7 +165,7 @@ def change_price():
         Computer.price = change_form.price.data
         flash('价格更改成功')
         return redirect(url_for('manage.change_price'))
-    return render_template('manage/change_price',
+    return render_template('manage/change_price.html',
                            search_form=SearchForm(),
                            computer_list=Computer.query.all(),
                            change_form=change_form)

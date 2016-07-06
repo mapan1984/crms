@@ -1,9 +1,10 @@
 from flask import Flask
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.mail import Mail
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.moment import Moment
-from flask.ext.login import LoginManager
+from flask_bootstrap import Bootstrap
+from flask_mail import Mail
+from flask_sqlalchemy import SQLAlchemy
+from flask_moment import Moment
+from flask_login import LoginManager
+
 from config import config
 
 bootstrap = Bootstrap()
@@ -31,8 +32,9 @@ def create_app(config_name): # 程序的配置名
     app.register_blueprint(main_blueprint)  # 注册蓝本
 
     from .user import user as user_blueprint
-    app.register_blueprint(user_blueprint, url_prefix='/user')  # prefix会使注册为/login
-                                                                # 的路由变为/auth/login
+    # prefix会使注册为/login的路由变为/auth/login
+    app.register_blueprint(user_blueprint, url_prefix='/user')
+
     from .manage import manage as manage_blueprint
     app.register_blueprint(manage_blueprint, url_prefix='/manage')
 

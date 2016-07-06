@@ -1,14 +1,17 @@
-from werkzeug.security import generate_password_hash, check_password_hash # 提供密码的散列计算
-from flask.ext.login import UserMixin # 提供验证用户方法的默认实现
+import datetime
+
+# 提供密码的散列计算
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin # 提供验证用户方法的默认实现
+
 from . import db, login_manager
 
-import datetime
 
 class Computer(db.Model):
     __tablename__ = 'computers'
-    price = 3
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
+    price = db.Column(db.Integer, default=3)
     memo = db.Column(db.Text())
     start_time = db.Column(db.DateTime())
     spend_time = db.Column(db.Interval())
@@ -21,7 +24,7 @@ class Computer(db.Model):
     def refresh(self):
         if self.start_time is not None:
             self.spend_time = datetime.datetime.now() - self.start_time
-            self.spend_money = (self.spend_time.seconds // 36)*Computer.price/100
+            self.spend_money = (self.spend_time.seconds // 36)*self.price/100
         else:
             pass
 

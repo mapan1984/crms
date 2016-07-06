@@ -1,12 +1,15 @@
-from flask import render_template, redirect, request, session, url_for, flash, abort
-from flask.ext.login import login_user, logout_user, login_required, current_user
+import functools
+
+from flask import render_template, redirect, request, session,\
+                  url_for, flash, abort
+from flask_login import login_user, logout_user, login_required, current_user
+
 from . import manage
 from .forms import AddComputerForm, DelComputerForm, AddUserForm,\
-                  DelUserForm, SearchForm, EditProfileForm, ChangeForm
+                   DelUserForm, SearchForm, EditProfileForm, ChangeForm
 from .. import db
 from ..models import User, Computer
 
-import functools
 
 def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信息
     @functools.wraps(func)
@@ -112,7 +115,8 @@ def add_users():
     if add_form.validate_on_submit():
         user = User.query.filter_by(username=add_form.username.data).first()
         if user == None:
-            u = User(username=add_form.username.data, email=add_form.email.data, 
+            u = User(username=add_form.username.data, 
+                     email=add_form.email.data,
                      password=add_form.password.data)
             db.session.add(u)
             flash('添加成功，用户已添加')
@@ -186,8 +190,10 @@ def computer(computer_name):
         return redirect(url_for('manage.computer', computer_name=computer.name))
     edit_profile_form.name.data = computer.name
     edit_profile_form.memo.data = computer.memo
-    return render_template('manage/computer.html', computer=computer,
-                           search_form=SearchForm(), edit_profile_form=edit_profile_form)
+    return render_template('manage/computer.html', 
+                           computer=computer,
+                           search_form=SearchForm(), 
+                           edit_profile_form=edit_profile_form)
 
 @manage.route('/logout')
 @login_required  # flask-login提供的修饰器，保护路由只能由登陆用户访问

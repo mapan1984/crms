@@ -1,20 +1,18 @@
+import datetime
+
 from flask import render_template, redirect, request, session, url_for, flash
-from flask.ext.login import login_user, logout_user, login_required, \
+from flask_login import login_user, logout_user, login_required, \
     current_user
+
 from . import main
 from .forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import User, Computer
 from ..email import send_email
 
-import datetime
-
-
-'''
-由蓝本定义路由: main
-定义路由是app为创建，所以使用current_app
-url_for使用命名空间
-'''
+# 由蓝本定义路由: main
+# 定义路由是app创建，所以使用current_app
+# url_for使用命名空间
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = LoginForm()
@@ -35,11 +33,13 @@ def index():
                     db.session.add(free_computer, user)
                     flash("已为用户分配电脑")
                 #session['current_user_id']=user.id
-                return redirect(request.args.get('next') or \
-                                url_for('user.information', user_name=user.username))
+                return redirect(request.args.get('next')\
+                                or url_for('user.information', 
+                                           user_name=user.username))
         else:
             flash('无效密码')
-    return render_template('index.html', form=form, current_time=datetime.datetime.utcnow())
+    return render_template('index.html', form=form, 
+                           current_time=datetime.datetime.utcnow())
 
 
 @main.route('/register', methods=['GET', 'POST'])

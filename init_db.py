@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # encoding: utf-8
+
 import os
 import datetime
+
 from app import db
 from app.models import User, Computer
 
@@ -34,17 +36,3 @@ c6.memo = "序列号：PF035E9C 处理器：AMD A8-6410 APU with AMD Radeon R5 G
 db.session.add_all([c1, c2, c3, c4, c5, c6, admin_mapan, user_ben,\
                     user_1ther,user_2ther,user_3ther,user_4ther,user_5ther])
 db.session.commit()
-
-print(c1.id)
-
-f=True
-
-def test_time():
-    global f
-    c=Computer.query.filter_by(name='c1').first()
-    if f:
-        c.start_time = datetime.datetime.now()
-        i=False
-    else:
-        print(c.current_time)
-        print(c.spend_time)

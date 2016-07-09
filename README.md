@@ -6,9 +6,10 @@
 2. 进入程序目录，运行以下命令,安装扩展; 
 
         $ pip install -r requirements.txt
-
+        
+4. 设置环境变量`BEN_ADMIN`为管理员邮件地址，`MAIL_USERNAME`、`MAIL_PASSWORD`为代理邮件地址和密码；
 3. 进入程序目录，运行以下命令,开启服务器;
 
         $ python manage.py runserver
 
-4. 在浏览器中访问: http://127.0.0.1:5000/，即可访问机房管理系统首页，进行后续操作。
+4. 在浏览器中访问: `http://127.0.0.1:5000`，即可访问机房管理系统首页，进行后续操作。

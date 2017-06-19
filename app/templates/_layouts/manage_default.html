@@ -22,7 +22,7 @@
         <li><a href="#">设置</a></li>
         <li><a href="{{ url_for('manage.logout') }}">退出登录</a></li>
       </ul>
-      <form action="{{ url_for('manage.search_computer') }}" method="post" 
+      <form action="{{ url_for('manage.search_computer') }}" method="post"
         class="navbar-form navbar-right" role="search">
         <div class="form-group">
           {{ search_form.name(class="form-control", placeholder="电脑编号/用户名") }}
@@ -64,4 +64,9 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin.js')}}"></script>
 {% endblock %}

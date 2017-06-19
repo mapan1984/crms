@@ -19,7 +19,7 @@ class Computer(db.Model):
 
     # 外键,值为表computers的id,类型为Integer
     # user_id可以为空，表示现在没有用户
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
 
     def refresh(self):
         if self.start_time is not None:
@@ -43,7 +43,7 @@ class User(UserMixin, db.Model):
     # 第一个参数Computer表示关联的模型
     # 第二个user向Computer模型中添加一个user属性
     # 这一属性可代替user_id访问User模型，获取模型对象
-    computers = db.relationship('Computer', backref='user', lazy='dynamic') 
+    computers = db.relationship('Computer', backref='user', lazy='dynamic')
 
     @property         # 把password方法变为属性,但读取会引发错误(xxxx = password)
     def password(self):

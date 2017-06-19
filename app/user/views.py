@@ -9,13 +9,13 @@ from ..models import User
 # prefix 为注册路由自动加前缀/user
 @user.route('/information/<user_name>', methods=['get', 'post'])
 @login_required # flask-login提供的修饰器，保护路由只能由登陆用户访问
-def information(user_name):    
+def information(user_name):
     current_user = User.query.filter_by(username=user_name).first()
     current_user_computer = current_user.computers.first()
     if current_user_computer is not None:
         current_user_computer.refresh()
         db.session.add(current_user_computer)
-    return render_template('user/information.html', 
+    return render_template('user/information.html',
                            user=current_user,
                            user_computer=current_user_computer)
 

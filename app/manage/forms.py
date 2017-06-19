@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, BooleanField,\
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 
-from ..models import Computer 
+from ..models import Computer
 
 
 class AddComputerForm(Form):
@@ -33,7 +33,7 @@ class DelUserForm(Form):
     submit = SubmitField('删除')
 
 class SearchForm(Form):
-    name = StringField('电脑编号/用户名', 
+    name = StringField('电脑编号/用户名',
                        validators=[Required(), Length(1, 64)])
     submit = SubmitField('搜索')
 

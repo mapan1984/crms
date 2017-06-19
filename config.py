@@ -18,12 +18,12 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SUBJECT_PREFIX = '[COM ADMIN]'
     MAIL_SENDER = 'COM Admin <mapansky1984@163.com>'
-    BEN_ADMIN =  os.environ.get('BEN_ADMIN')
+    ADMIN_EMAIL =  os.environ.get('ADMIN_EMAIL')
 # end_mail_config }}
     @staticmethod
     def init_app(app):
         pass
-    
+
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')\
@@ -37,7 +37,7 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')\
                     or 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-            
+
 config = {
         'development': DevelopmentConfig,
         'testing': TestingConfig,

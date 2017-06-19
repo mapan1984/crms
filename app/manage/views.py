@@ -26,7 +26,7 @@ def all_computers_refresh(func): # 定义装饰器，动态更新所有电脑信
 @login_required
 @all_computers_refresh
 def all_computers():
-    return render_template('manage/all_computers.html', 
+    return render_template('manage/all_computers.html',
                            computer_list=Computer.query.all(),
                            search_form=SearchForm())
 
@@ -34,7 +34,7 @@ def all_computers():
 @login_required
 @all_computers_refresh
 def busy_computers():
-    return render_template('manage/busy_computers.html', 
+    return render_template('manage/busy_computers.html',
                            computer_list=Computer.query.all(),
                            search_form=SearchForm())
 
@@ -42,7 +42,7 @@ def busy_computers():
 @login_required
 @all_computers_refresh
 def free_computers():
-    return render_template('manage/free_computers.html', 
+    return render_template('manage/free_computers.html',
                            computer_list=Computer.query.all(),
                            search_form=SearchForm())
 
@@ -60,7 +60,7 @@ def add_computers():
         else:
             flash('添加失败，电脑已存在')
         return redirect(url_for('manage.add_computers'))
-    return render_template('manage/add_computers.html', 
+    return render_template('manage/add_computers.html',
                            computer_list=Computer.query.all(),
                            search_form=SearchForm(),
                            add_form=add_form)
@@ -78,7 +78,7 @@ def del_computers():
         else:
             flash('删除失败，电脑不存在')
         return redirect(url_for('manage.del_computers'))
-    return render_template('manage/del_computers.html', 
+    return render_template('manage/del_computers.html',
                            computer_list=Computer.query.all(),
                            search_form=SearchForm(),
                            del_form=del_form)
@@ -87,7 +87,7 @@ def del_computers():
 @login_required
 @all_computers_refresh
 def all_users():
-    return render_template('manage/all_users.html', 
+    return render_template('manage/all_users.html',
                            search_form=SearchForm(),
                            user_list=User.query.all())
 
@@ -95,7 +95,7 @@ def all_users():
 @login_required
 @all_computers_refresh
 def busy_users():
-    return render_template('manage/busy_users.html', 
+    return render_template('manage/busy_users.html',
                            search_form=SearchForm(),
                            user_list=User.query.all())
 
@@ -103,7 +103,7 @@ def busy_users():
 @login_required
 @all_computers_refresh
 def free_users():
-    return render_template('manage/free_users.html', 
+    return render_template('manage/free_users.html',
                            search_form=SearchForm(),
                            user_list=User.query.all())
 
@@ -115,7 +115,7 @@ def add_users():
     if add_form.validate_on_submit():
         user = User.query.filter_by(username=add_form.username.data).first()
         if user == None:
-            u = User(username=add_form.username.data, 
+            u = User(username=add_form.username.data,
                      email=add_form.email.data,
                      password=add_form.password.data)
             db.session.add(u)
@@ -123,7 +123,7 @@ def add_users():
         else:
             flash('添加失败，用户已存在')
         return redirect(url_for('manage.add_users'))
-    return render_template('manage/add_users.html', 
+    return render_template('manage/add_users.html',
                            user_list=User.query.all(),
                            search_form=SearchForm(),
                            add_form=add_form)
@@ -141,7 +141,7 @@ def del_users():
         else:
             flash('删除失败，用户不存在')
         return redirect(url_for('manage.del_users'))
-    return render_template('manage/del_users.html', 
+    return render_template('manage/del_users.html',
                            user_list=User.query.all(),
                            search_form=SearchForm(),
                            del_form=del_form)
@@ -154,7 +154,8 @@ def search_computer():
     computer = Computer.query.filter_by(name=search_form.name.data).first()
     user = User.query.filter_by(username=search_form.name.data).first()
     if computer is not None:
-        return redirect(url_for('manage.computer', computer_name=computer.name))
+        return redirect(url_for('manage.computer',
+                        computer_name=computer.name))
     elif user is not None:
         return redirect(url_for('user.information', user_name=user.username))
     else:
@@ -173,7 +174,7 @@ def change_price():
                            search_form=SearchForm(),
                            computer_list=Computer.query.all(),
                            change_form=change_form)
-        
+
 @manage.route('/computer/<computer_name>', methods=['GET', 'POST'])
 @login_required
 @all_computers_refresh
@@ -190,9 +191,9 @@ def computer(computer_name):
         return redirect(url_for('manage.computer', computer_name=computer.name))
     edit_profile_form.name.data = computer.name
     edit_profile_form.memo.data = computer.memo
-    return render_template('manage/computer.html', 
+    return render_template('manage/computer.html',
                            computer=computer,
-                           search_form=SearchForm(), 
+                           search_form=SearchForm(),
                            edit_profile_form=edit_profile_form)
 
 @manage.route('/logout')

@@ -23,8 +23,9 @@ def information(user_name):
 @login_required
 def logout():
     current_user_computer = current_user.computers.first()
-    current_user_computer.user = None   # 退出登录时取消链接电脑
-    current_user_computer.start_time = None
+    if current_user_computer is not None:
+        current_user_computer.user = None   # 退出登录时取消链接电脑
+        current_user_computer.start_time = None
     message=''.join(['用户', current_user.username, '现在已经退出'])
     logout_user() # 删除并重折用户回话
     flash(message)

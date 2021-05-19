@@ -28,10 +28,13 @@ def index():
                 if user.computers.first() == None: # 为用户分配电脑
                     user.number = user.number + 1
                     free_computer = Computer.query.filter_by(user=None).first()
-                    free_computer.user = user
-                    free_computer.start_time = datetime.datetime.now()
-                    db.session.add(free_computer, user)
-                    flash("已为用户分配电脑")
+                    if free_computer is not None:
+                        free_computer.user = user
+                        free_computer.start_time = datetime.datetime.now()
+                        db.session.add(free_computer, user)
+                        flash("已为用户分配电脑")
+                    else:
+                        flash("没有可用电脑")
                 #session['current_user_id']=user.id
                 return redirect(request.args.get('next')\
                                 or url_for('user.information', 

@@ -14,11 +14,11 @@ class Config:
     MAIL_PORT = '465'
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME', 'mapan1984@outlook.com' )
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD',  'mapan1984@outlook.com')
     MAIL_SUBJECT_PREFIX = '[COM ADMIN]'
     MAIL_SENDER = 'COM Admin <mapansky1984@163.com>'
-    ADMIN_EMAIL =  os.environ.get('ADMIN_EMAIL')
+    ADMIN_EMAIL =  os.environ.get('ADMIN_EMAIL', 'mapan1984@outlook.com')
 # end_mail_config }}
     @staticmethod
     def init_app(app):
